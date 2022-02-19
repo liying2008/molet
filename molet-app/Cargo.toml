@@ -9,3 +9,7 @@ edition = "2018"
 native-windows-gui = "1.0.12"
 native-windows-derive = "1.0.4"
 clipboard-win = "4.4.1"
+
+[dependencies.rusqlite]
+version = "0.26.3"
+features = ["bundled"]
