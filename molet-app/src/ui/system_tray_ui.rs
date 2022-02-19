@@ -25,7 +25,7 @@ impl nwg::NativeUi<SystemTrayUi> for SystemTray {
         nwg::TrayNotification::builder()
             .parent(&data.window)
             .icon(Some(&data.icon))
-            .tip(Some("Hello"))
+            .tip(Some("Molet - Clipboard Data Staging Tool"))
             .build(&mut data.tray)?;
 
         nwg::Menu::builder()
@@ -34,19 +34,19 @@ impl nwg::NativeUi<SystemTrayUi> for SystemTray {
             .build(&mut data.tray_menu)?;
 
         nwg::MenuItem::builder()
-            .text("Hello")
+            .text("Store Clipboard Data")
             .parent(&data.tray_menu)
-            .build(&mut data.tray_item1)?;
+            .build(&mut data.tray_item_data_push)?;
 
         nwg::MenuItem::builder()
-            .text("Popup")
+            .text("Show Clipboard Data")
             .parent(&data.tray_menu)
-            .build(&mut data.tray_item2)?;
+            .build(&mut data.tray_item_data_show)?;
 
         nwg::MenuItem::builder()
             .text("Exit")
             .parent(&data.tray_menu)
-            .build(&mut data.tray_item3)?;
+            .build(&mut data.tray_item_exit)?;
 
         // Wrap-up
         let ui = SystemTrayUi {
@@ -65,11 +65,11 @@ impl nwg::NativeUi<SystemTrayUi> for SystemTray {
                         }
                     }
                     E::OnMenuItemSelected => {
-                        if &handle == &evt_ui.tray_item1 {
-                            SystemTray::hello1(&evt_ui);
-                        } else if &handle == &evt_ui.tray_item2 {
-                            SystemTray::hello2(&evt_ui);
-                        } else if &handle == &evt_ui.tray_item3 {
+                        if &handle == &evt_ui.tray_item_data_push {
+                            SystemTray::store_clipboard_data(&evt_ui);
+                        } else if &handle == &evt_ui.tray_item_data_show {
+                            SystemTray::show_clipboard_data(&evt_ui);
+                        } else if &handle == &evt_ui.tray_item_exit {
                             SystemTray::exit(&evt_ui);
                         }
                     }

@@ -7,4 +7,5 @@ edition = "2018"
 
 [dependencies]
 native-windows-gui = "1.0.12"
-native-windows-derive = "1.0.3"
+native-windows-derive = "1.0.4"
+clipboard-win = "4.4.1"
