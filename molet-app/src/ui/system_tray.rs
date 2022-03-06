@@ -1,6 +1,8 @@
 extern crate native_windows_gui as nwg;
 
 use crate::op::data_op::DataOp;
+use crate::ui::data_table::DataTable;
+use native_windows_gui::NativeUi;
 
 #[derive(Default)]
 pub struct SystemTray {
@@ -21,10 +23,8 @@ impl SystemTray {
 
     pub fn store_clipboard_data(&self) {
         // nwg::modal_info_message(&self.window, "Hello", "Hello World!");
-        DataOp::clipboard_to_db()
-    }
-
-    pub fn show_clipboard_data(&self) {
+        DataOp::clipboard_to_db();
+        // 显示存储成功的通知
         let flags = nwg::TrayNotificationFlags::USER_ICON | nwg::TrayNotificationFlags::LARGE_ICON;
         self.tray.show(
             "Hello World",
@@ -32,6 +32,11 @@ impl SystemTray {
             Some(flags),
             Some(&self.icon),
         );
+    }
+
+    pub fn show_clipboard_data(&self) {
+        let _ui = DataTable::build_ui(Default::default()).expect("Failed to build UI");
+        nwg::dispatch_thread_events();
     }
 
     pub fn exit(&self) {
