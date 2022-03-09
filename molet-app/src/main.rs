@@ -9,6 +9,12 @@ use nwg::NativeUi;
 use std::process;
 
 fn main() {
+    // 初始化配置文件
+    if let Err(err) = Config::init_conf() {
+        println!("Error occurred: {}", err);
+        process::exit(1);
+    };
+
     let r = DB::init_db();
     match r {
         Ok(r) => {
@@ -19,11 +25,6 @@ fn main() {
         }
     }
 
-    // 初始化配置文件
-    Config::init_conf().unwrap_or_else(|err| {
-        println!("Error occurred: {}", err);
-        process::exit(1);
-    });
     nwg::init().expect("Failed to init Native Windows GUI");
     nwg::Font::set_global_family("Segoe UI").expect("Failed to set default font");
     let _ui = SystemTray::build_ui(Default::default()).expect("Failed to build UI");
