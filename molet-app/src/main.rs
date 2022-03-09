@@ -2,7 +2,7 @@
 
 extern crate native_windows_gui as nwg;
 
-use molet_app::conf::conf::Config;
+use molet_app::conf::Config;
 use molet_app::data::db::DB;
 use molet_app::SystemTray;
 use nwg::NativeUi;
@@ -14,6 +14,16 @@ fn main() {
         println!("Error occurred: {}", err);
         process::exit(1);
     };
+
+    match Config::load_conf() {
+        Ok(config) => {
+            println!("{:?}", config)
+        }
+        Err(e) => {
+            println!("Error occurred: {}", e);
+            process::exit(1);
+        }
+    }
 
     let r = DB::init_db();
     match r {

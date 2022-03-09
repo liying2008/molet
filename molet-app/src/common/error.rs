@@ -4,6 +4,7 @@ use std::fmt::{write, Display, Formatter};
 pub enum MoletError {
     EnvError(String),
     SystemError(String),
+    AppError(String),
     IOError(String),
 }
 
@@ -12,6 +13,7 @@ impl Display for MoletError {
         match self {
             MoletError::EnvError(s) => f.write_str(s.as_str()),
             MoletError::SystemError(s) => f.write_str(s.as_str()),
+            MoletError::AppError(s) => f.write_str(s.as_str()),
             MoletError::IOError(s) => f.write_str(s.as_str()),
         }
     }

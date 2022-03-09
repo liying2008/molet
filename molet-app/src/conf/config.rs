@@ -1,5 +1,5 @@
 use crate::common::error::MoletError;
-use crate::common::error::MoletError::{EnvError, IOError, SystemError};
+use crate::common::error::MoletError::{AppError, EnvError, IOError, SystemError};
 use serde::{Deserialize, Serialize};
 use std::fs;
 use std::path::PathBuf;
@@ -41,12 +41,35 @@ impl Config {
             };
             let config_json = serde_json::to_string(&config).unwrap();
             if let Err(e) = fs::write(&config_path, config_json) {
-                println!("{}", e);
+                eprintln!("{}", e);
                 return Err(IOError(String::from(
                     "Write initialization configuration failed.",
                 )));
             }
         }
         Ok(())
+    }
+
+    pub fn load_conf() -> Result<Config, MoletError> {
+        let app_data_env = env!("APPDATA");
+        if app_data_env.is_empty() {
+            return Err(EnvError(String::from(
+                "APPDATA environment variable not set.",
+            )));
+        }
+        let mut config_file_path = PathBuf::from(app_data_env);
+        config_file_path.push(APP_VENDOR);
+        config_file_path.push(APP_FOLDER_NAME);
+        config_file_path.push(CONFIG_FILENAME);
+        match fs::read_to_string(config_file_path) {
+            Ok(s) => match serde_json::from_str(&s) {
+                Ok(config) => Ok(config),
+                Err(e) => Err(AppError(e.to_string())),
+            },
+            Err(e) => {
+                eprintln!("{}", e);
+                Err(IOError(String::from("Read configuration file failed.")))
+            }
+        }
     }
 }

@@ -1,2 +1,3 @@
-pub mod conf;
-pub mod conf_file;
+pub mod config;
+
+pub use config::Config;
