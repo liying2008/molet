@@ -1,5 +1,6 @@
 use crate::common::error::MoletError;
 use crate::common::error::MoletError::{AppError, EnvError, IOError, SystemError};
+use crate::common::global::{DEFAULT_DB_EXT, DEFAULT_DB_NAME};
 use serde::{Deserialize, Serialize};
 use std::fs;
 use std::path::PathBuf;
@@ -36,8 +37,11 @@ impl Config {
         println!("config_path={:?}", &config_path);
         config_path.push(CONFIG_FILENAME);
         if !config_path.exists() {
+            let mut db_path = PathBuf::from(&config_path);
+            db_path.pop();
+            db_path.push(format!("{}{}", DEFAULT_DB_NAME, DEFAULT_DB_EXT));
             let config = Config {
-                db_path: String::new(),
+                db_path: db_path.into_os_string().into_string().unwrap(),
             };
             let config_json = serde_json::to_string(&config).unwrap();
             if let Err(e) = fs::write(&config_path, config_json) {

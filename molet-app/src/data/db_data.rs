@@ -16,5 +16,6 @@ pub struct StagingData {
     pub id: u32,
     pub content_type: String,
     pub creation_time: u32,
+    pub title: String,
     pub content: Option<Vec<u8>>,
 }
