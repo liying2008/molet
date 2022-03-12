@@ -1,4 +1,3 @@
-use crate::data::db_data::ContentType::Text;
 use crate::data::db_data::StagingData;
 use crate::Config;
 use rusqlite::{params, Connection, Result};
@@ -55,7 +54,7 @@ impl DB {
         self.conn.execute(
             sql.as_str(),
             params![
-                data.content_type,
+                data.content_type.to_string(),
                 data.creation_time,
                 data.title,
                 data.content
@@ -90,5 +89,38 @@ impl DB {
             Ok(v) => Ok(v),
             Err(e) => Err(e.1),
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::common::global::{DEFAULT_DB_EXT, DEFAULT_DB_NAME};
+    use crate::data::{ContentType, StagingData};
+    use crate::{Config, DB};
+
+    #[test]
+    fn test_db() {
+        let config = Config {
+            db_path: format!("./{}{}", DEFAULT_DB_NAME, DEFAULT_DB_EXT),
+        };
+        let db = DB::connect(&config).unwrap();
+        db.init_db().unwrap();
+
+        let data = StagingData {
+            id: 0,
+            content_type: ContentType::Text,
+            creation_time: 12345678,
+            title: "标题".to_string(),
+            content: Some(Vec::from("TEST DATA".as_bytes())),
+        };
+
+        db.insert_one(&data).unwrap();
+        db.insert_one(&data).unwrap();
+        let data_vec = db.get_all_data().unwrap();
+        for data in data_vec {
+            println!("data: {:?}", data)
+        }
+
+        db.close().unwrap()
     }
 }
