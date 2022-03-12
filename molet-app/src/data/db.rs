@@ -108,7 +108,7 @@ mod tests {
 
         let data = StagingData {
             id: 0,
-            content_type: ContentType::Text,
+            content_type: ContentType::Unicode,
             creation_time: 12345678,
             title: "标题".to_string(),
             content: Some(Vec::from("TEST DATA".as_bytes())),

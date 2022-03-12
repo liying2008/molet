@@ -1,15 +1,22 @@
 use rusqlite::types::{FromSql, FromSqlResult, ValueRef};
+use std::convert::TryInto;
 use std::fmt::{Display, Formatter};
 
 #[derive(Debug)]
 pub enum ContentType {
-    Text,
+    Unicode,
+    Bitmap,
+    FileList,
+    RawData,
 }
 
 impl Display for ContentType {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
-            ContentType::Text => write!(f, "Text"),
+            ContentType::Unicode => write!(f, "Unicode"),
+            ContentType::Bitmap => write!(f, "Bitmap"),
+            ContentType::FileList => write!(f, "FileList"),
+            ContentType::RawData => write!(f, "RawData"),
         }
     }
 }
@@ -17,8 +24,11 @@ impl Display for ContentType {
 impl From<String> for ContentType {
     fn from(content_type: String) -> Self {
         match content_type {
-            content_type if content_type == "Text" => ContentType::Text,
-            _ => ContentType::Text,
+            content_type if content_type == "Unicode" => ContentType::Unicode,
+            content_type if content_type == "Bitmap" => ContentType::Bitmap,
+            content_type if content_type == "FileList" => ContentType::FileList,
+            content_type if content_type == "RawData" => ContentType::RawData,
+            _ => ContentType::RawData,
         }
     }
 }
@@ -26,7 +36,10 @@ impl From<String> for ContentType {
 impl From<ContentType> for String {
     fn from(content_type: ContentType) -> Self {
         match content_type {
-            ContentType::Text => "Text".into(),
+            ContentType::Unicode => "Unicode".into(),
+            ContentType::Bitmap => "Bitmap".into(),
+            ContentType::FileList => "FileList".into(),
+            ContentType::RawData => "RawData".into(),
         }
     }
 }
