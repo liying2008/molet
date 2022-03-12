@@ -62,7 +62,7 @@ impl DB {
         )
     }
 
-    pub fn get_all_data(&self) -> Result<Vec<StagingData>> {
+    pub fn get_all(&self) -> Result<Vec<StagingData>> {
         let sql = format!(
             "SELECT id, content_type, creation_time, title, content FROM {}",
             STAGING_DATA_TABLE_NAME
@@ -82,6 +82,16 @@ impl DB {
             data_vec.push(data.unwrap())
         }
         Ok(data_vec)
+    }
+
+    pub fn delete_by_id(&self, id: u32) -> Result<usize> {
+        let sql = format!("DELETE FROM {} WHERE id=?", STAGING_DATA_TABLE_NAME);
+        self.conn.execute(sql.as_str(), params![id])
+    }
+
+    pub fn delete_all(&self) -> Result<usize> {
+        let sql = format!("DELETE FROM {}", STAGING_DATA_TABLE_NAME);
+        self.conn.execute(sql.as_str(), params![])
     }
 
     pub fn close(self) -> Result<()> {
@@ -106,6 +116,8 @@ mod tests {
         let db = DB::connect(&config).unwrap();
         db.init_db().unwrap();
 
+        db.delete_all().unwrap();
+
         let data = StagingData {
             id: 0,
             content_type: ContentType::Unicode,
@@ -116,7 +128,7 @@ mod tests {
 
         db.insert_one(&data).unwrap();
         db.insert_one(&data).unwrap();
-        let data_vec = db.get_all_data().unwrap();
+        let data_vec = db.get_all().unwrap();
         for data in data_vec {
             println!("data: {:?}", data)
         }
