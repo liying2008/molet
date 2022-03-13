@@ -68,7 +68,7 @@ impl nwg::NativeUi<DataTableUi> for DataTable {
             handle_events,
         ));
 
-        return Ok(ui);
+        Ok(ui)
     }
 }
 

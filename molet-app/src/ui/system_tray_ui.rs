@@ -59,6 +59,12 @@ impl nwg::NativeUi<SystemTrayUi> for SystemTray {
         let handle_events = move |evt, _evt_data, handle| {
             if let Some(evt_ui) = evt_ui.upgrade() {
                 match evt {
+                    E::OnMousePress(e) => {
+                        if &handle == &evt_ui.tray {
+                            println!("OnMousePress: {:?}", e);
+                            SystemTray::show_menu(&evt_ui);
+                        }
+                    }
                     E::OnContextMenu => {
                         if &handle == &evt_ui.tray {
                             SystemTray::show_menu(&evt_ui);
@@ -85,7 +91,7 @@ impl nwg::NativeUi<SystemTrayUi> for SystemTray {
                 handle_events,
             ));
 
-        return Ok(ui);
+        Ok(ui)
     }
 }
 
