@@ -6,6 +6,8 @@ pub enum MoletError {
     SystemError(String),
     AppError(String),
     IOError(String),
+    Warning(String),
+    Info(String),
 }
 
 impl Display for MoletError {
@@ -15,6 +17,8 @@ impl Display for MoletError {
             MoletError::SystemError(s) => f.write_str(s.as_str()),
             MoletError::AppError(s) => f.write_str(s.as_str()),
             MoletError::IOError(s) => f.write_str(s.as_str()),
+            MoletError::Warning(s) => f.write_str(s.as_str()),
+            MoletError::Info(s) => f.write_str(s.as_str()),
         }
     }
 }

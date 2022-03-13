@@ -60,9 +60,9 @@ impl ToSql for ContentType {
 
 #[derive(Debug)]
 pub struct StagingData {
-    pub id: u32,
+    pub id: Option<u32>,
     pub content_type: ContentType,
-    pub creation_time: u32,
+    pub creation_time: i64,
     pub title: String,
     pub content: Option<Vec<u8>>,
 }

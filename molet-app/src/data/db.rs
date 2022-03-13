@@ -119,7 +119,7 @@ mod tests {
         db.delete_all().unwrap();
 
         let data = StagingData {
-            id: 0,
+            id: None,
             content_type: ContentType::Unicode,
             creation_time: 12345678,
             title: "标题".to_string(),
