@@ -54,7 +54,7 @@ impl DB {
         self.conn.execute(
             sql.as_str(),
             params![
-                data.content_type.to_string(),
+                data.content_type,
                 data.creation_time,
                 data.title,
                 data.content

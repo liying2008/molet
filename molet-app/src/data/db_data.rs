@@ -1,4 +1,5 @@
-use rusqlite::types::{FromSql, FromSqlResult, ValueRef};
+use rusqlite::types::{FromSql, FromSqlResult, ToSqlOutput, ValueRef};
+use rusqlite::ToSql;
 use std::fmt::{Display, Formatter};
 
 #[derive(Debug)]
@@ -47,6 +48,13 @@ impl FromSql for ContentType {
     #[inline]
     fn column_result(value: ValueRef<'_>) -> FromSqlResult<Self> {
         value.as_str().map(ToString::to_string).map(Into::into)
+    }
+}
+
+impl ToSql for ContentType {
+    #[inline]
+    fn to_sql(&self) -> rusqlite::Result<ToSqlOutput<'_>> {
+        Ok(ToSqlOutput::from(self.to_string()))
     }
 }
 
