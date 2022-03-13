@@ -107,6 +107,7 @@ mod tests {
     use crate::common::global::{DEFAULT_DB_EXT, DEFAULT_DB_NAME};
     use crate::data::{ContentType, StagingData};
     use crate::{Config, DB};
+    use chrono::Local;
 
     #[test]
     fn test_db() {
@@ -121,7 +122,7 @@ mod tests {
         let data = StagingData {
             id: None,
             content_type: ContentType::Unicode,
-            creation_time: 12345678,
+            creation_time: Local::now().timestamp(),
             title: "标题".to_string(),
             content: Some(Vec::from("TEST DATA".as_bytes())),
         };
