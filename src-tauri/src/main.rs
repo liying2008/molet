@@ -3,7 +3,10 @@
     windows_subsystem = "windows"
 )]
 
-use molet::{ui::system_tray::{get_system_tray, system_tray_handler}, load_config, init_db};
+use molet::{
+    init_db, load_config,
+    ui::system_tray::{get_system_tray, system_tray_handler},
+};
 
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 #[tauri::command]

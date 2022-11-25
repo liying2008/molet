@@ -55,11 +55,16 @@
     },
     "windows": [
       {
+        "label": "main",
         "fullscreen": false,
         "height": 600,
+        "width": 800,
         "resizable": true,
-        "title": "molet",
-        "width": 800
+        "decorations": false,
+        "alwaysOnTop": true,
+        "skipTaskbar": true,
+        "title": "Molet",
+        "center": true
       }
     ],
     "systemTray": {

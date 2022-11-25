@@ -23,6 +23,15 @@ pub fn system_tray_handler(app: &AppHandle, event: SystemTrayEvent) {
             ..
         } => {
             println!("system tray received a left click");
+            let molet_window = app.get_window("main");
+            if let Some(molet_window) = molet_window {
+                if let Ok(false) = molet_window.is_visible() {
+                    molet_window.show().unwrap();
+                    molet_window.set_focus().unwrap();
+                } else if let Ok(true) = molet_window.is_visible() {
+                    molet_window.hide().unwrap();
+                }
+            }
         }
         SystemTrayEvent::RightClick {
             position: _,
