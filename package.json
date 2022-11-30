@@ -22,6 +22,8 @@
     "@vitejs/plugin-vue": "^3.0.1",
     "eslint": "^8.28.0",
     "eslint-plugin-vue": "^9.8.0",
+    "postcss": "^8.4.19",
+    "postcss-html": "^1.5.0",
     "sass": "^1.56.1",
     "stylelint": "^14.15.0",
     "stylelint-config-recess-order": "^3.0.0",

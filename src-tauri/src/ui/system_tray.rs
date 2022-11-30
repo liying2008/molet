@@ -91,14 +91,11 @@ fn store_clipboard_data(window: &Window) {
                         title: "Error occurred".into(),
                         body: Some(format!("{}", e)),
                         icon: None,
-                    },
+                    }
+                    .to_json()
+                    .unwrap(),
                 )
                 .unwrap();
-            // nwg::modal_error_message(
-            //     &self.window,
-            //     "Error",
-            //     format!("Error occurred: {}", e).as_str(),
-            // );
             return;
         }
     };
@@ -110,21 +107,14 @@ fn store_clipboard_data(window: &Window) {
                 .emit(
                     NOTIFICATION_EVENT_NAME,
                     NotificationPayload {
-                        title: title,
-                        body: Some("Store successfully".into()),
+                        title: "Success!".into(),
+                        body: Some(title),
                         icon: None,
-                    },
+                    }
+                    .to_json()
+                    .unwrap(),
                 )
                 .unwrap();
-
-            // let flags =
-            //     nwg::TrayNotificationFlags::USER_ICON | nwg::TrayNotificationFlags::LARGE_ICON;
-            // self.tray.show(
-            //     title.as_str(),
-            //     Some("Store successfully"),
-            //     Some(flags),
-            //     Some(&self.icon),
-            // );
         }
         Err(MoletError::Warning(s)) => {
             // 显示警告信息
@@ -133,21 +123,14 @@ fn store_clipboard_data(window: &Window) {
                 .emit(
                     NOTIFICATION_EVENT_NAME,
                     NotificationPayload {
-                        title: "Molet Warning".into(),
+                        title: "Warning!".into(),
                         body: Some(s),
                         icon: None,
-                    },
+                    }
+                    .to_json()
+                    .unwrap(),
                 )
                 .unwrap();
-
-            // let flags = nwg::TrayNotificationFlags::WARNING_ICON
-            //     | nwg::TrayNotificationFlags::LARGE_ICON;
-            // self.tray.show(
-            //     s.as_str(),
-            //     Some("Molet Warning"),
-            //     Some(flags),
-            //     Some(&self.icon),
-            // );
         }
         Err(MoletError::Info(s)) => {
             // 显示普通信息
@@ -156,21 +139,14 @@ fn store_clipboard_data(window: &Window) {
                 .emit(
                     NOTIFICATION_EVENT_NAME,
                     NotificationPayload {
-                        title: "Molet Info".into(),
+                        title: "Info:".into(),
                         body: Some(s),
                         icon: None,
-                    },
+                    }
+                    .to_json()
+                    .unwrap(),
                 )
                 .unwrap();
-
-            // let flags =
-            //     nwg::TrayNotificationFlags::INFO_ICON | nwg::TrayNotificationFlags::LARGE_ICON;
-            // self.tray.show(
-            //     s.as_str(),
-            //     Some("Molet Info"),
-            //     Some(flags),
-            //     Some(&self.icon),
-            // );
         }
         Err(e) => {
             // 显示存储失败信息
@@ -179,21 +155,14 @@ fn store_clipboard_data(window: &Window) {
                 .emit(
                     NOTIFICATION_EVENT_NAME,
                     NotificationPayload {
-                        title: "Failed to store data".into(),
+                        title: "Error!".into(),
                         body: Some(format!("{}", e)),
                         icon: None,
-                    },
+                    }
+                    .to_json()
+                    .unwrap(),
                 )
                 .unwrap();
-
-            // let flags =
-            //     nwg::TrayNotificationFlags::ERROR_ICON | nwg::TrayNotificationFlags::LARGE_ICON;
-            // self.tray.show(
-            //     e.to_string().as_str(),
-            //     Some("Failed to store data"),
-            //     Some(flags),
-            //     Some(&self.icon),
-            // );
         }
     };
 }
