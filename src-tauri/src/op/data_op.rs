@@ -86,4 +86,6 @@ impl DataOp {
             "Clipboard is empty or data type is not supported.".into(),
         ))
     }
+
+    pub fn data_to_clipboard(config: &Config) {}
 }

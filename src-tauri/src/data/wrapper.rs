@@ -8,3 +8,10 @@ pub fn insert_one(config: &Config, data: &StagingData) -> Result<usize> {
     db.close()?;
     Ok(result)
 }
+
+pub fn get_all(config: &Config) -> Result<Vec<StagingData>> {
+    let db = DB::connect(config)?;
+    let result = db.get_all()?;
+    db.close()?;
+    Ok(result)
+}

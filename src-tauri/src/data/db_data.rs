@@ -2,7 +2,7 @@ use rusqlite::types::{FromSql, FromSqlResult, ToSqlOutput, ValueRef};
 use rusqlite::ToSql;
 use std::fmt::{Display, Formatter};
 
-#[derive(Debug)]
+#[derive(Debug, serde::Serialize)]
 pub enum ContentType {
     Unicode,
     Bitmap,
@@ -21,8 +21,8 @@ impl Display for ContentType {
     }
 }
 
-impl From<String> for ContentType {
-    fn from(content_type: String) -> Self {
+impl From<&str> for ContentType {
+    fn from(content_type: &str) -> Self {
         match content_type {
             content_type if content_type == "Unicode" => ContentType::Unicode,
             content_type if content_type == "Bitmap" => ContentType::Bitmap,
@@ -33,13 +33,13 @@ impl From<String> for ContentType {
     }
 }
 
-impl From<ContentType> for String {
+impl From<ContentType> for &str {
     fn from(content_type: ContentType) -> Self {
         match content_type {
-            ContentType::Unicode => "Unicode".into(),
-            ContentType::Bitmap => "Bitmap".into(),
-            ContentType::FileList => "FileList".into(),
-            ContentType::RawData => "RawData".into(),
+            ContentType::Unicode => "Unicode",
+            ContentType::Bitmap => "Bitmap",
+            ContentType::FileList => "FileList",
+            ContentType::RawData => "RawData",
         }
     }
 }
@@ -47,7 +47,7 @@ impl From<ContentType> for String {
 impl FromSql for ContentType {
     #[inline]
     fn column_result(value: ValueRef<'_>) -> FromSqlResult<Self> {
-        value.as_str().map(ToString::to_string).map(Into::into)
+        value.as_str().map(Into::into)
     }
 }
 
@@ -58,10 +58,12 @@ impl ToSql for ContentType {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, serde::Serialize)]
 pub struct StagingData {
     pub id: Option<u32>,
+    #[serde(rename = "contentType")]
     pub content_type: ContentType,
+    #[serde(rename = "creationTime")]
     pub creation_time: i64,
     pub title: String,
     pub content: Option<Vec<u8>>,

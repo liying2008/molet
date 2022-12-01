@@ -130,6 +130,8 @@ mod tests {
         db.insert_one(&data).unwrap();
         db.insert_one(&data).unwrap();
         let data_vec = db.get_all().unwrap();
+        assert_eq!(data_vec.len(), 2);
+
         for data in data_vec {
             println!("data: {:?}", data)
         }

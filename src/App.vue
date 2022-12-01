@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { appWindow } from '@tauri-apps/api/window'
-import Greet from './components/Greet.vue'
+import Greet from './components/DataList.vue'
 import Notification from './components/notification/Notification.vue'
 </script>
 
