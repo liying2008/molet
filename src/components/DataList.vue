@@ -19,13 +19,19 @@ async function getAllData() {
 </script>
 
 <template>
-  <div class="card">
+  <div class="list-wrapper">
     <!-- <input id="greet-input" v-model="name" placeholder="Enter a name..." />
     <button type="button" @click="greet()">Greet</button> -->
     <DataItem
       v-for="stagingData in stagingDataList"
       :key="stagingData.id!"
-      :data="stagingData.title"
+      :staging-data="stagingData"
     ></DataItem>
   </div>
 </template>
+<style scoped lang="scss">
+.list-wrapper {
+  // width: 90%;
+  // margin: auto;
+}
+</style>
