@@ -4,11 +4,11 @@ pub mod data;
 pub mod op;
 pub mod ui;
 
+use chrono::Local;
 
 use crate::conf::Config;
-use crate::data::DB;
+use crate::data::{wrapper, DB};
 use std::process;
-
 
 pub fn load_config() -> Config {
     // 初始化配置文件
@@ -41,4 +41,21 @@ pub fn init_db(config: &Config) {
         println!("Error occurred: Database close failed: {}", e);
         process::exit(1);
     });
+}
+
+pub fn get_all_data() -> String {
+    let time1 = Local::now();
+    let config = Config::load_conf().unwrap();
+    let r = wrapper::get_all(&config);
+    let time2 = Local::now();
+    println!("load data from db time: {}", time2 - time1);
+    match r {
+        Ok(data) => {
+            let s = serde_json::to_string(&data).unwrap();
+            let time3 = Local::now();
+            println!("serialize json time: {}", time3 - time2);
+            s
+        }
+        Err(e) => e.to_string(),
+    }
 }
