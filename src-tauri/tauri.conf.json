@@ -61,8 +61,8 @@
         "width": 800,
         "resizable": true,
         "decorations": false,
-        "alwaysOnTop": true,
-        "skipTaskbar": true,
+        "alwaysOnTop": false,
+        "skipTaskbar": false,
         "title": "Molet",
         "center": true
       }
