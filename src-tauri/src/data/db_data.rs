@@ -2,7 +2,7 @@ use rusqlite::types::{FromSql, FromSqlResult, ToSqlOutput, ValueRef};
 use rusqlite::ToSql;
 use std::fmt::{Display, Formatter};
 
-#[derive(Debug, serde::Serialize)]
+#[derive(Debug, Clone, serde::Serialize)]
 pub enum ContentType {
     Unicode,
     Bitmap,
@@ -58,7 +58,7 @@ impl ToSql for ContentType {
     }
 }
 
-#[derive(Debug, serde::Serialize)]
+#[derive(Debug, Clone, serde::Serialize)]
 pub struct StagingData {
     pub id: Option<u32>,
     #[serde(rename = "contentType")]

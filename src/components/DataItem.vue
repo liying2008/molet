@@ -21,10 +21,10 @@ function getBitmapContent(arr: number[]) {
     <div>
       <pre v-if="(stagingData.contentType === ContentType.Unicode)">{{ getUnicodeContent(stagingData.content) }}</pre>
       <div v-if="(stagingData.contentType === ContentType.Bitmap)">
-        <img
+        <!-- <img
           :src="getBitmapContent(stagingData.content)"
           alt=""
-        >
+        > -->
       </div>
       <div class="menu-icon"></div>
     </div>

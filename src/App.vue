@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { appWindow } from '@tauri-apps/api/window'
-import Greet from './components/DataList.vue'
+import DataList from './components/DataList.vue'
 import Notification from './components/notification/Notification.vue'
 </script>
 
 <template>
+  <!-- 标题栏 -->
   <div class="container">
     <div
       data-tauri-drag-region
@@ -31,8 +32,10 @@ import Notification from './components/notification/Notification.vue'
         />
       </div>
     </div>
+    <!-- 应用通知 -->
     <Notification />
-    <Greet />
+    <!-- 数据列表 -->
+    <DataList />
   </div>
 </template>
 

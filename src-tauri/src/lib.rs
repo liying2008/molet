@@ -5,9 +5,11 @@ pub mod op;
 pub mod ui;
 
 use chrono::Local;
+use data::StagingData;
 
 use crate::conf::Config;
 use crate::data::{wrapper, DB};
+use rusqlite::Result;
 use std::process;
 
 pub fn load_config() -> Config {
@@ -43,7 +45,7 @@ pub fn init_db(config: &Config) {
     });
 }
 
-pub fn get_all_data() -> String {
+pub fn get_all_data() -> Vec<StagingData> {
     let time1 = Local::now();
     let config = Config::load_conf().unwrap();
     let r = wrapper::get_all(&config);
@@ -51,11 +53,15 @@ pub fn get_all_data() -> String {
     println!("load data from db time: {}", time2 - time1);
     match r {
         Ok(data) => {
-            let s = serde_json::to_string(&data).unwrap();
-            let time3 = Local::now();
-            println!("serialize json time: {}", time3 - time2);
-            s
+            // let s = serde_json::to_string(&data).unwrap();
+            // let time3 = Local::now();
+            // println!("serialize json time: {}", time3 - time2);
+            // s
+            data
         }
-        Err(e) => e.to_string(),
+        Err(e) => {
+            eprintln!("{}", e);
+            vec![]
+        }
     }
 }
