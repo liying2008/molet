@@ -12,7 +12,8 @@
   "dependencies": {
     "@tauri-apps/api": "^1.2.0",
     "@vueuse/core": "^9.6.0",
-    "vue": "^3.2.45"
+    "vue": "^3.2.45",
+    "vue-router": "^4.1.6"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.33.1",

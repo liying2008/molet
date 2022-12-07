@@ -1,43 +1,22 @@
 <script setup lang="ts">
-import { appWindow } from '@tauri-apps/api/window'
-import DataList from './components/DataList.vue'
-import Notification from './components/notification/Notification.vue'
 </script>
 
 <template>
-  <!-- 标题栏 -->
-  <div class="container">
-    <div
-      data-tauri-drag-region
-      class="titlebar"
-    >
-      <div
-        id="titlebar-maximize"
-        class="titlebar-button"
-        @click="appWindow.toggleMaximize()"
-      >
-        <img
-          src="https://api.iconify.design/mdi:window-maximize.svg"
-          alt="maximize"
-        />
-      </div>
-      <div
-        id="titlebar-close"
-        class="titlebar-button"
-        @click="appWindow.hide()"
-      >
-        <img
-          src="https://api.iconify.design/mdi:close.svg"
-          alt="close"
-        />
-      </div>
-    </div>
-    <!-- 应用通知 -->
-    <Notification />
-    <!-- 数据列表 -->
-    <DataList />
-  </div>
+  <n-config-provider>
+    <!-- 使用 n-global-style 组件，将主题应用到全局 -->
+    <n-global-style />
+    <n-dialog-provider>
+      <n-message-provider>
+        <div
+          id="app"
+          class="app"
+        >
+          <router-view />
+        </div>
+      </n-message-provider>
+    </n-dialog-provider>
+  </n-config-provider>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 </style>
