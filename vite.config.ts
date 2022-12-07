@@ -1,6 +1,8 @@
 import { resolve } from 'path'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import Components from 'unplugin-vue-components/vite'
+import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
 
 
 export const r = (...args: string[]) => resolve(__dirname, ...args)
@@ -14,6 +16,12 @@ export default defineConfig({
   },
   plugins: [
     vue(),
+    Components({
+      dirs: [r('src/components')],
+      // generate `components.d.ts` for ts support with Volar
+      dts: r('src/components.d.ts'),
+      resolvers: [NaiveUiResolver()],
+    }),
   ],
 
   // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`

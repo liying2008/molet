@@ -22,3 +22,4 @@ dist-ssr
 *.sw?
 
 molet-data.db
+/src/components.d.ts
