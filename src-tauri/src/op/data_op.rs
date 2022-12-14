@@ -3,35 +3,40 @@ use crate::data::wrapper::insert_one;
 use crate::data::ContentType;
 use crate::data::StagingData;
 use crate::Config;
+use arboard::Clipboard;
 use chrono::Local;
-use clipboard_win::{formats, get_clipboard, SysResult};
 
 const TITLE_STRING_LEN: usize = 12;
 pub struct DataOp {}
 
 impl DataOp {
     fn get_clipboard_unicode() -> String {
-        let result: SysResult<String> = get_clipboard(formats::Unicode);
+        let mut clipboard = Clipboard::new().unwrap();
+        let result = clipboard.get_text();
         match result {
             Ok(data) => {
                 println!("get_clipboard_unicode::ok={}", data);
                 data
             }
             Err(err) => {
-                println!("get_clipboard_unicode::err={}", err.message());
+                println!("get_clipboard_unicode::err={}", err.to_string());
                 String::new()
             }
         }
     }
+
     fn get_clipboard_bitmap() -> Vec<u8> {
-        let result: SysResult<Vec<u8>> = get_clipboard(formats::Bitmap);
+        let mut clipboard = Clipboard::new().unwrap();
+        let result = clipboard.get_image();
+
         match result {
             Ok(data) => {
-                println!("get_clipboard_bitmap::ok={}", data.len());
-                data
+                println!("get_clipboard_bitmap::ok={}", data.bytes.len());
+                // TODO get bitmap bytes
+                data.bytes.to_vec()
             }
             Err(err) => {
-                println!("get_clipboard_bitmap::err={}", err.message());
+                println!("get_clipboard_bitmap::err={}", err.to_string());
                 vec![]
             }
         }
