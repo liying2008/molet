@@ -55,6 +55,7 @@ onUnmounted(() => {
 
 <style scoped lang="scss">
 .list-wrapper {
-
+  padding: 10px;
+  background-color: #f1f1f1;
 }
 </style>

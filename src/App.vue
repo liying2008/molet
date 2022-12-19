@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import TitleBar from '~/components/TitleBar.vue'
 </script>
 
 <template>
@@ -11,6 +12,8 @@
           id="app"
           class="app"
         >
+          <!-- 标题栏 -->
+          <TitleBar />
           <router-view />
         </div>
       </n-message-provider>
@@ -19,4 +22,5 @@
 </template>
 
 <style scoped lang="scss">
+
 </style>

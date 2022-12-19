@@ -4,20 +4,11 @@
   font-weight: 400;
   color: #333333;
   background-color: #eeeeee;
-
-  /* font-synthesis: none;
+  font-synthesis: none;
   text-rendering: optimizelegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-size-adjust: 100%; */
-}
-
-.container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding-top: 30px;
-  margin: 0;
+  text-size-adjust: 100%;
 }
 
 .row {
@@ -77,28 +68,4 @@ button:hover {
     color: #ffffff;
     background-color: #0f0f0f98;
   }
-}
-
-.titlebar {
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
-  display: flex;
-  justify-content: flex-end;
-  height: 30px;
-  user-select: none;
-  background: #329ea3;
-}
-
-.titlebar-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 30px;
-  height: 30px;
-}
-
-.titlebar-button:hover {
-  background: #5bbec3;
 }

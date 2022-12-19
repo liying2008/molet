@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import ItemHeader from './item-header/ItemHeader.vue'
 import type { StagingData } from '~/model/staging_data'
 import { ContentType } from '~/model/staging_data'
 
@@ -19,33 +20,16 @@ function arrayBufferToBase64(arr: number[]) {
   }
   return window.btoa(binary)
 }
-
-function contentToClipboard() {
-  console.log(`contentToClipboard: ${props.stagingData.id}`)
-}
 </script>
 
 <template>
-  <div class="item-wrapper">
-    <div class="header">
-      <img
-        class="tool-icon"
-        src="https://api.iconify.design/mdi:clipboard-outline.svg"
-        alt="Copy"
-        @click="contentToClipboard"
-      />
-      <img
-        class="tool-icon"
-        src="https://api.iconify.design/mdi:heart-outline.svg"
-        alt="Favorite"
-      />
-      <div class="vertical-divider"></div>
-      <img
-        class="tool-icon"
-        src="https://api.iconify.design/mdi:delete-forever.svg"
-        alt="Delete"
-      />
-    </div>
+  <n-card
+    :title="stagingData.title"
+    class="item-wrapper"
+  >
+    <template #header-extra>
+      <ItemHeader />
+    </template>
     <div class="content">
       <div v-if="stagingData.contentType === ContentType.Unicode">
         <pre>{{ getUnicodeContent(stagingData.content) }}</pre>
@@ -62,39 +46,14 @@ function contentToClipboard() {
       >
         [ 暂不支持显示 ]
       </div>
-      <div class="menu-icon"></div>
     </div>
-  </div>
+  </n-card>
 </template>
 
 <style scoped lang="scss">
 .item-wrapper {
-  padding: 10px;
   margin: 10px;
-  background-color: #ffffff;
   border-radius: 10px;
-
-  .header {
-    display: flex;
-    justify-content: flex-end;
-    height: 18px;
-
-    .vertical-divider {
-      width: 1px;
-      height: 100%;
-      margin: 0 4px;
-      background-color: #333333;
-    }
-
-    .tool-icon {
-      margin: 0 4px;
-      cursor: pointer;
-
-      :hover {
-
-      }
-    }
-  }
 
   .content {
     margin-top: 10px;
